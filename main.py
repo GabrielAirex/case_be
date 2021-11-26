@@ -1,15 +1,15 @@
-import selenium
+import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
 import pandas as pd
 
 
-
+conection = requests.get('https://steamdb.info/sales/')
 lista_jogos = []
-
-navegador = webdriver.Chrome()
-navegador.get('https://steamdb.info/sales/')
+if (conection.status_code != 200):
+    navegador = webdriver.Chrome()
+    navegador.get('https://steamdb.info/sales/')
 
 down_page=0
 while down_page != 30:
