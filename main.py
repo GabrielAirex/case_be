@@ -12,7 +12,7 @@ navegador = webdriver.Chrome()
 navegador.get('https://steamdb.info/sales/')
 
 down_page=0
-while down_page != 100:
+while down_page != 30:
     navegador.execute_script("window.scrollTo(0, window.scrollY + 200)")
     sleep(0.1)
     site_debug = BeautifulSoup(navegador.page_source, 'html.parser')
@@ -20,7 +20,7 @@ while down_page != 100:
     jogos = site_debug.find_all('tr', attrs={'class' : 'app'})
 
     down_page = down_page+1
-navegador.
+
 
 for jogo in jogos:
 
@@ -38,10 +38,13 @@ for jogo in jogos:
 
     jogo_inicio_promo = jogo.find_all('td', attrs={'class': 'timeago'})[1].text
 
-    lista_jogos.append([jogo_nome,jogo_link,jogo_desconto,jogo_tempo_promo,jogo_inicio_promo])
+    ultima_atualização = jogo.find_all('td', attrs={'class': 'timeago'})[-1].text
 
-print(lista_jogos)
-df = pd.DataFrame(lista_jogos, columns=['Nome','Link','Desconto','A promoção terminará em','Promoção Iniciada há'])
+
+    lista_jogos.append([jogo_nome,jogo_link,jogo_desconto,jogo_tempo_promo,jogo_inicio_promo,ultima_atualização])
+
+##print(lista_jogos)
+df = pd.DataFrame(lista_jogos, columns=['Nome','Link','Desconto','A promoção terminará em','Promoção Iniciada há:','A ultima atualização ocorreu há:'])
 
 df.to_excel('jogos_Steam.xls',sheet_name='Jogos_Steam', na_rep='#N/A', header=True,index=False)
 
