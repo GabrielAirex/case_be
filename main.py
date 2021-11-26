@@ -32,7 +32,7 @@ for jogo in jogos:
     if(jogo_desconto):
         jogo_desconto = jogo.find('td', attrs={'class': 'price-discount-major'}).text
     else:
-        jogo_desconto=''
+        jogo_desconto = jogo.find_all('td')[3].text
 
     jogo_tempo_promo = jogo.find_all('td', attrs={'class': 'timeago'})[0].text
 
