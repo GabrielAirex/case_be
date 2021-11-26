@@ -40,11 +40,16 @@ for jogo in jogos:
 
     ultima_atualização = jogo.find_all('td', attrs={'class': 'timeago'})[-1].text
 
+    jogo_preço = jogo.find_all('td')[4].text
 
-    lista_jogos.append([jogo_nome,jogo_link,jogo_desconto,jogo_tempo_promo,jogo_inicio_promo,ultima_atualização])
+    jogo_rating = jogo.find_all('td')[5].text
 
-##print(lista_jogos)
-df = pd.DataFrame(lista_jogos, columns=['Nome','Link','Desconto','A promoção terminará em','Promoção Iniciada há:','A ultima atualização ocorreu há:'])
+
+
+    lista_jogos.append([jogo_nome,jogo_link,jogo_preço,jogo_desconto,jogo_rating,jogo_tempo_promo,jogo_inicio_promo,ultima_atualização])
+
+
+df = pd.DataFrame(lista_jogos, columns=['Nome','Link','Preço','Desconto','Rating','A promoção terminará em','Promoção Iniciada há:','A ultima atualização ocorreu há:'])
 
 df.to_excel('jogos_Steam.xls',sheet_name='Jogos_Steam', na_rep='#N/A', header=True,index=False)
 
